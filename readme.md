@@ -61,8 +61,11 @@ Our new approach separates different types of work, applies appropriate sizing r
 
 ### Sprint Capacity Planning
 - **Individual capacity:** 7-8 story points maximum per 2-week sprint
-- **Team capacity:** Sum of individual capacities minus 10% buffer
-- **Research allocation:** 10-20% of total capacity reserved for spikes
+- **Work type allocation:**
+  - **Development stories:** 60-80% of capacity
+  - **Research/spikes:** 10-20% of capacity  
+  - **External dependency work:** 10-20% of capacity
+- **Total sprint commitment:** Sum of all story types within capacity limits
 
 ---
 
@@ -111,13 +114,17 @@ Traditional stories that require external review often get unfairly counted agai
 
 ### Research Story Framework
 
-#### Spike Stories (Time-boxed, No Story Points)
+#### Spike Stories (Time-boxed WITH Story Points)
 **Purpose:** Investigate unknown areas to enable informed decisions
+
+**Sizing:** Based on effort/complexity like development stories, but capped at timebox
+**Tracking:** Separate "Research Velocity" from "Development Velocity"
 
 **Template:**
 ```
 Title: SPIKE - [Research Question]
-Timebox: [1-5 days maximum]
+Story Points: [1-5 points based on effort/complexity]
+Timebox: [1-5 days maximum - hard stop regardless of points]
 Questions to Answer:
 - [Specific question 1]
 - [Specific question 2]
@@ -132,7 +139,8 @@ Acceptance Criteria:
 **Example:**
 ```
 Title: SPIKE - Evaluate Spring Boot to AWS Lambda migration feasibility
-Timebox: 3 days
+Story Points: 5 points
+Timebox: 3 days (hard stop)
 Questions to Answer:
 - Can our current Spring Boot application run on AWS Lambda?
 - What are cold start performance implications?
@@ -144,6 +152,11 @@ Deliverables:
 - Migration effort estimate and timeline
 - Architecture Decision Record (ADR)
 ```
+
+**Research Story Sizing Guidelines:**
+- **1-2 points:** Simple investigation, proof of concept, documentation research
+- **3 points:** Moderate complexity research, small prototype development
+- **5 points:** Complex investigation, comprehensive prototyping, architecture analysis
 
 #### Implementation Stories (After Research Complete)
 Once spike is complete, create properly estimated development stories:
@@ -194,24 +207,45 @@ Before adding to sprint:
 
 ### Sprint Review Updates
 **Demonstrate:**
-- Completed development stories
-- Research findings and decisions made
+- Completed development stories with working software
+- Research findings, decisions made, and follow-up stories created
 - External dependency resolution progress
 - Knowledge gained and documented
+
+**Sprint Completion Reporting:**
+```
+Sprint X Results:
+Total Story Points Completed: 32/35 (91%)
+
+Breakdown:
+- Development Work: 24 points (75%)
+- Research/Spikes: 6 points (19%) 
+- External Remediation: 2 points (6%)
+
+Key Outcomes:
+- 4 features delivered to production
+- Lambda migration feasibility confirmed
+- 2 external dependency blockers resolved
+```
 
 ---
 
 ## Metrics and Tracking
 
 ### Development Velocity
-- **Track:** Only development stories completed by the team
-- **Exclude:** External review time, pure research time
-- **Goal:** Consistent velocity based on team-controlled work
+- **Track:** Development stories completed by the team
+- **Exclude:** External review time from cycle time calculations
+- **Goal:** Consistent velocity based on development work
 
-### Research Metrics
-- **Knowledge Velocity:** Research questions answered per sprint
-- **Decision Velocity:** Technical decisions made and documented
-- **Learning Application:** Time from research to implementation
+### Research Velocity
+- **Track:** Research/spike stories completed with story points
+- **Measure:** Knowledge outcomes achieved per points invested
+- **Goal:** Valuable research findings that inform development decisions
+
+### Combined Sprint Output
+- **Total Story Points:** Development + Research + External Remediation
+- **Breakdown Visibility:** Show stakeholders the mix of work types
+- **Capacity Planning:** Allocate 60-80% development, 10-20% research, 10-20% external work
 
 ### External Dependency Metrics
 - **Review Cycle Time:** Average time for external review completion
@@ -248,8 +282,8 @@ Stories:
 **Solution:**
 ```
 Phase 1 - Research:
-- SPIKE-001: Spring Boot Lambda compatibility analysis (2 days)
-- SPIKE-002: Performance comparison ECS vs Lambda (3 days)
+- SPIKE-001: Spring Boot Lambda compatibility analysis (3 points, 2 days max)
+- SPIKE-002: Performance comparison ECS vs Lambda (5 points, 3 days max)
 
 Phase 2 - Implementation (if approved):
 - LAMBDA-001: Refactor Spring Boot for Lambda runtime (5 points)
@@ -374,7 +408,7 @@ Phase 2 - Implementation (if approved):
 ---
 
 **Document Maintainer:** GMR 
-**Last Updated:** June 27 2025 
-**Next Review:** TBD
+**Last Updated:** [Date]  
+**Next Review:** [Date + 3 months]
 
 *This is a living document. Please provide feedback and suggestions for improvement*
